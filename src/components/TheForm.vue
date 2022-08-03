@@ -1,8 +1,18 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: userNameStatus === 'invalid' }"
+    >
       <label for="user-name">Your Name</label>
-      <input v-model="userName" id="user-name" name="user-name" type="text" />
+      <input
+        v-model.trim="userName"
+        @blur="validateInput"
+        id="user-name"
+        name="user-name"
+        type="text"
+      />
+      <p v-if="userNameStatus === 'invalid'">Pease enter a valid name.</p>
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
@@ -96,9 +106,10 @@
 export default {
   data() {
     return {
-      referrer: 'wom',
       userName: '',
+      userNameStatus: 'pending',
       userAge: null,
+      referrer: 'wom',
       interest: [],
       how: null,
       confirm: false,
@@ -120,6 +131,13 @@ export default {
       this.how = null;
       this.confirm = false;
     },
+    validateInput() {
+      if (this.userName === '') {
+        this.userNameStatus = 'invalid';
+      } else {
+        this.userNameStatus = 'valid';
+      }
+    },
   },
 };
 </script>
@@ -136,6 +154,14 @@ form {
 
 .form-control {
   margin: 0.5rem 0;
+}
+
+.form-control.invalid input {
+  border-color: red;
+}
+
+.form-control.invalid label {
+  color: red;
 }
 
 label {
