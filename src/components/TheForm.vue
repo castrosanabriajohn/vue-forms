@@ -1,16 +1,16 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <div class="form-control">
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" />
+      <input v-model="userName" id="user-name" name="user-name" type="text" />
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
-      <input id="age" name="age" type="number" />
+      <input v-model="userAge" id="age" name="age" type="number" />
     </div>
     <div class="form-control">
       <label for="referrer">How did you hear about us?</label>
-      <select id="referrer" name="referrer">
+      <select v-model="referrer" id="referrer" name="referrer">
         <option value="google">Google</option>
         <option value="wom">Word of mouth</option>
         <option value="newspaper">Newspaper</option>
@@ -51,6 +51,29 @@
     </div>
   </form>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      referrer: 'wom',
+      userName: '',
+      userAge: null,
+    };
+  },
+  methods: {
+    handleSubmit() {
+      console.log('username: ' + this.userName);
+      console.log('userAge: ');
+      console.log(this.userAge);
+      console.log('referrer: ' + this.referrer);
+      this.userName = '';
+      this.userAge = null;
+      this.referrer = 'wom';
+    },
+  },
+};
+</script>
 
 <style scoped>
 form {
